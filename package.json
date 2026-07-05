@@ -1,0 +1,10 @@
+{
+  "name": "diagnostico-elo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Diagnóstico de posicionamento no Instagram — ELO (com IA via OpenAI)",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico ELO — Posicionamento no Instagram</title>
+<style>
+  :root{
+    --cream:#FBF3EF;
+    --cream2:#F6E7DF;
+    --rose:#B76E79;
+    --rose-soft:#C99BA1;
+    --rose-pale:#E7C9CB;
+    --tan:#C9A87C;
+    --tan-soft:#D9C1A0;
+    --brown:#4A2C2A;
+    --brown-soft:#6E4B45;
+    --line:#E3CFC7;
+    --ok:#7C9A72;
+    --shadow:0 10px 30px rgba(74,44,42,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,#FDF7F3 0%,#F6E7DF 100%);
+    color:var(--brown);
+    min-height:100vh;
+    line-height:1.55;
+    padding:24px 14px 60px;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  /* Header */
+  .brand{text-align:center;margin-bottom:22px}
+  .brand .logo{
+    width:74px;height:74px;border-radius:50%;margin:0 auto 10px;
+    border:2px solid var(--rose);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;background:var(--cream);
+  }
+  .brand .logo b{font-size:26px;letter-spacing:3px;color:var(--brown);font-weight:800;line-height:1}
+  .brand .logo span{font-size:7px;letter-spacing:1.5px;color:var(--rose);margin-top:3px}
+  .brand .logo-img{width:150px;max-width:60%;height:auto;margin:0 auto 8px;display:block}
+  .brand .tagline{font-size:9px;letter-spacing:2px;color:var(--rose);margin-bottom:10px;font-weight:600}
+  .brand h1{font-size:15px;letter-spacing:4px;color:var(--rose);font-weight:600;text-transform:uppercase}
+  .brand p{font-size:13px;color:var(--brown-soft);margin-top:2px;letter-spacing:1px}
+  /* Card */
+  .card{
+    background:var(--cream);border-radius:22px;box-shadow:var(--shadow);
+    padding:30px 26px;border:1px solid var(--line);
+  }
+  /* Progress */
+  .progress{display:flex;gap:6px;margin-bottom:24px}
+  .progress i{flex:1;height:5px;border-radius:5px;background:var(--rose-pale);transition:.3s}
+  .progress i.on{background:var(--rose)}
+  .step-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tan);font-weight:700;margin-bottom:6px}
+  h2.q{font-size:23px;font-weight:800;color:var(--brown);margin-bottom:6px;line-height:1.25}
+  .hint{font-size:14px;color:var(--brown-soft);margin-bottom:20px}
+  /* Inputs */
+  label.f{display:block;font-weight:700;font-size:14px;margin:16px 0 6px}
+  input[type=text],textarea{
+    width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;
+    font-size:15px;font-family:inherit;color:var(--brown);background:#fff;resize:vertical;
+  }
+  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--rose)}
+  textarea{min-height:70px}
+  /* Option chips */
+  .opts{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+  .opt{
+    border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;background:#fff;
+    cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px;font-size:15px;
+  }
+  .opt:hover{border-color:var(--rose-soft);background:#fffdfc}
+  .opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--rose-soft);flex:0 0 auto;transition:.15s}
+  .opt.sel{border-color:var(--rose);background:#FBEDEE}
+  .opt.sel .dot{background:var(--rose);border-color:var(--rose);box-shadow:inset 0 0 0 3px #fff}
+  .opt b{font-weight:700}
+  .opt small{display:block;color:var(--brown-soft);font-weight:400;font-size:12.5px;margin-top:2px}
+  .opts.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .opts.grid .opt{flex-direction:column;align-items:flex-start;text-align:left}
+  /* checklist */
+  .check .opt.sel .dot{border-radius:6px}
+  /* Upload */
+  .drop{
+    border:2px dashed var(--rose-soft);border-radius:16px;padding:26px;text-align:center;
+    background:#fffdfc;cursor:pointer;transition:.15s;color:var(--brown-soft);
+  }
+  .drop:hover{background:#FBEDEE}
+  .drop b{color:var(--rose);display:block;font-size:16px;margin-bottom:4px}
+  .drop img{max-width:180px;border-radius:12px;margin-top:12px;box-shadow:var(--shadow)}
+  /* Buttons */
+  .nav{display:flex;gap:12px;margin-top:26px}
+  button.btn{
+    flex:1;border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:700;
+    cursor:pointer;font-family:inherit;transition:.15s;letter-spacing:.5px;
+  }
+  .btn.prim{background:var(--rose);color:#fff}
+  .btn.prim:hover{background:#a55e69}
+  .btn.ghost{background:transparent;color:var(--brown-soft);border:1.5px solid var(--line);flex:0 0 auto;padding:15px 22px}
+  .btn.ghost:hover{background:#fff}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  /* Result */
+  .r-head{text-align:center;margin-bottom:8px}
+  .r-head .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--tan);font-weight:700}
+  .r-head h2{font-size:26px;font-weight:800;margin:6px 0}
+  .r-name{color:var(--rose)}
+  .block{border-top:1px solid var(--line);padding:22px 0}
+  .block:first-of-type{border-top:none}
+  .block h3{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .block h3 .n{width:24px;height:24px;border-radius:50%;background:var(--rose);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto}
+  .frase{font-size:19px;font-weight:700;color:var(--brown);background:#FBEDEE;border-radius:14px;padding:18px;border-left:4px solid var(--rose)}
+  .bio-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;font-size:15px;white-space:pre-wrap;line-height:1.7}
+  .copy{font-size:12px;color:var(--rose);cursor:pointer;font-weight:700;margin-top:8px;display:inline-block}
+  .list{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .list li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px}
+  .list li b{color:var(--brown)}
+  .destaques{display:flex;flex-wrap:wrap;gap:10px}
+  .destaque{background:#fff;border:1.5px solid var(--rose-pale);border-radius:50px;padding:8px 16px;font-size:13.5px;font-weight:700;color:var(--brown)}
+  .palette{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+  .sw{text-align:center;font-size:11px;color:var(--brown-soft)}
+  .sw .chip{width:64px;height:64px;border-radius:14px;box-shadow:var(--shadow);margin-bottom:6px;border:1px solid rgba(0,0,0,.05)}
+  .sw code{font-family:monospace;font-size:11px}
+  .pilar{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+  .pilar .pc{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:0 0 auto}
+  .pilar b{display:block;margin-bottom:2px}
+  .pilar small{color:var(--brown-soft);font-size:13px}
+  .acao{counter-reset:a}
+  .acao li{position:relative;padding-left:14px}
+  .warn{background:#FDF1E7;border-left:4px solid var(--tan);border-radius:12px;padding:14px 16px;font-size:14px;margin-top:8px}
+  .warn b{color:#a06a2c}
+  .foot{text-align:center;font-size:12px;color:var(--tan);margin-top:26px;letter-spacing:1px}
+  .hide{display:none}
+  .center{text-align:center}
+  .intro-icon{font-size:44px;margin-bottom:10px}
+  .spinner{width:52px;height:52px;border-radius:50%;border:5px solid var(--rose-pale);border-top-color:var(--rose);margin:0 auto;animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:520px){.opts.grid{grid-template-columns:1fr}.card{padding:24px 18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img src="logo.png" alt="ELO" class="logo-img">
+    <div class="tagline">ESSÊNCIA · LIDERANÇA · ORGANIZAÇÃO</div>
+    <h1>Diagnóstico de Posicionamento</h1>
+    <p>Descubra como se posicionar e atrair as clientes certas</p>
+  </div>
+
+  <div class="card" id="card">
+    <div class="progress" id="prog"></div>
+    <div id="stage"></div>
+    <div class="nav" id="nav">
+      <button class="btn ghost hide" id="back">Voltar</button>
+      <button class="btn prim" id="next">Começar</button>
+    </div>
+  </div>
+  <div class="foot">Estamos fortalecendo seu posicionamento • Mulher que Vende</div>
+</div>
+
+<script>
+/* ---------- DADOS / ESTADO ---------- */
+const data = {
+  nome:"", oquefaz:"", paraquem:"", transformacao:"",
+  sentimento:"", tom:"", erros:[], bio_clara:"", objetivo:"", print:null
+};
+let step = 0;
+
+/* paletas por sentimento desejado */
+const PALETAS = {
+  acolhedora:{titulo:"Acolhedora & Próxima",cores:[["#C97B63","Terracota"],["#E7C9BE","Nude rosado"],["#F3E4D7","Areia"],["#6E4B45","Marrom quente"]],
+    msg:"Transmite calor, confiança e proximidade — ideal pra criar vínculo antes de vender."},
+  sofisticada:{titulo:"Sofisticada & Elegante",cores:[["#B7A488","Dourado suave"],["#EDE6DC","Off-white"],["#3D332C","Grafite quente"],["#C9BBA8","Champagne"]],
+    msg:"Passa refinamento e valor percebido alto — perfeita pra produtos e serviços premium."},
+  confiavel:{titulo:"Confiável & Profissional",cores:[["#3F5E63","Petróleo"],["#EAE7E0","Névoa"],["#B98E63","Caramelo"],["#2E3A3C","Ardósia"]],
+    msg:"Comunica autoridade e segurança — ótima pra consultoria, mentoria e serviços técnicos."},
+  energetica:{titulo:"Energética & Inspiradora",cores:[["#D96C4A","Coral"],["#E9B44C","Mostarda"],["#F4E7D3","Creme"],["#8A5A44","Terroso"]],
+    msg:"Desperta ação e entusiasmo — puxa engajamento e uma audiência ativa."},
+  delicada:{titulo:"Delicada & Feminina",cores:[["#D8A7B0","Rosa quartzo"],["#E9D8E4","Lavanda suave"],["#F6EEF0","Pétala"],["#7C5C63","Vinho suave"]],
+    msg:"Transmite sensibilidade e cuidado — combina com beleza, bem-estar e autocuidado."},
+  criativa:{titulo:"Criativa & Autêntica",cores:[["#7E8A5A","Verde-oliva"],["#E4B95B","Ocre"],["#EFE6D5","Linho"],["#5B4A3A","Café"]],
+    msg:"Mostra originalidade e personalidade — destaca quem foge do óbvio."}
+};
+
+/* ---------- PERGUNTAS ---------- */
+const steps = [
+  {type:"intro"},
+  {type:"text", key:"nome", label:"PASSO 1 · VOCÊ",
+   q:"Como você se chama?", hint:"Vamos personalizar o seu diagnóstico.",
+   fields:[{k:"nome",l:"Seu nome ou o nome da sua marca",ph:"Ex: Ana Prado / Ateliê Flor"}]},
+  {type:"text", key:"oquefaz", label:"PASSO 2 · SEU NEGÓCIO",
+   q:"O que você faz ou vende?", hint:"Escreva com suas palavras, sem se preocupar em ficar bonito.",
+   fields:[
+     {k:"oquefaz",l:"O que você entrega (produto/serviço)",ph:"Ex: confeitaria artesanal / consultoria de imagem"},
+     {k:"paraquem",l:"Para quem é (sua cliente ideal)",ph:"Ex: mulheres que querem se vestir melhor no dia a dia"}
+   ]},
+  {type:"text", key:"transformacao", label:"PASSO 3 · SUA ENTREGA",
+   q:"Que transformação você gera na vida da cliente?", hint:"O que muda pra ela depois de comprar de você? É isso que vende.",
+   fields:[{k:"transformacao",l:"Depois de mim, minha cliente...",ph:"Ex: se sente mais confiante e segura pra se mostrar"}]},
+  {type:"single", key:"sentimento", label:"PASSO 4 · PERCEPÇÃO",
+   q:"Como você quer ser percebida?", hint:"Escolha o sentimento que sua marca deve despertar. Isso vai definir suas cores.",
+   options:[
+     {v:"acolhedora",b:"Acolhedora & próxima",s:"Calor, confiança, vínculo"},
+     {v:"sofisticada",b:"Sofisticada & elegante",s:"Refinamento e valor alto"},
+     {v:"confiavel",b:"Confiável & profissional",s:"Autoridade e segurança"},
+     {v:"energetica",b:"Energética & inspiradora",s:"Movimento e entusiasmo"},
+     {v:"delicada",b:"Delicada & feminina",s:"Sensibilidade e cuidado"},
+     {v:"criativa",b:"Criativa & autêntica",s:"Originalidade e personalidade"}
+   ]},
+  {type:"single", key:"tom", label:"PASSO 5 · VOZ",
+   q:"Como você gosta de se comunicar?", hint:"O tom que combina com você e com sua cliente.",
+   options:[
+     {v:"proxima",b:"Amiga e próxima",s:"Fala como quem conversa com uma amiga"},
+     {v:"inspiradora",b:"Inspiradora e motivadora",s:"Levanta, encoraja, provoca ação"},
+     {v:"especialista",b:"Especialista e didática",s:"Ensina com clareza e autoridade"},
+     {v:"leve",b:"Leve e bem-humorada",s:"Descontraída, com leveza e humor"}
+   ]},
+  {type:"multi", key:"erros", label:"PASSO 6 · DIAGNÓSTICO ATUAL",
+   q:"Marque o que você acredita que comete hoje", hint:"Sem culpa. É só pra gerar clareza sobre onde ajustar.",
+   options:[
+     {v:"identidade",b:"Ausência de identidade",s:"Minha estética muda toda semana"},
+     {v:"bio",b:"Bio confusa",s:"Não fica claro quem sou / o que faço"},
+     {v:"vitrine",b:"Perfil vitrine",s:"Só posto produto, agenda e promoção"},
+     {v:"tudo",b:"Falo sobre tudo",s:"Muitos assuntos diferentes"},
+     {v:"generico",b:"Conteúdo genérico",s:"Compartilho o que qualquer um acha em qualquer lugar"},
+     {v:"sumir",b:"Apareço e sumo",s:"Posto uns dias e depois desapareço"},
+     {v:"semcta",b:"Ensino sem direcionar",s:"Entrego conteúdo mas não conduzo pra uma ação"}
+   ]},
+  {type:"single", key:"objetivo", label:"PASSO 7 · OBJETIVO",
+   q:"Qual é a sua prioridade agora?", hint:"Vou ajustar as recomendações pro que importa pra você.",
+   options:[
+     {v:"autoridade",b:"Construir autoridade",s:"Ser reconhecida como referência"},
+     {v:"vendas",b:"Vender mais",s:"Transformar seguidores em clientes"},
+     {v:"audiencia",b:"Crescer a audiência",s:"Ser encontrada por mais pessoas"},
+     {v:"conexao",b:"Criar conexão",s:"Aproximar e engajar quem já me segue"}
+   ]},
+  {type:"upload", key:"print", label:"PASSO 8 · SEU PERFIL",
+   q:"Anexe um print do seu perfil (opcional)", hint:"Serve pra você comparar o antes e o depois. Fica só no seu navegador."},
+  {type:"result"}
+];
+
+/* ---------- RENDER ---------- */
+const stage=document.getElementById('stage');
+const prog=document.getElementById('prog');
+const btnNext=document.getElementById('next');
+const btnBack=document.getElementById('back');
+
+function renderProgress(){
+  prog.innerHTML="";
+  const total=steps.length-1;
+  for(let i=1;i<=total;i++){
+    const b=document.createElement('i');
+    if(i<=step) b.classList.add('on');
+    prog.appendChild(b);
+  }
+  prog.classList.toggle('hide', step===0 || steps[step].type==="result");
+}
+
+function render(){
+  const s=steps[step];
+  renderProgress();
+  btnBack.classList.toggle('hide', step<=1);
+  btnNext.classList.remove('hide');
+  btnNext.textContent = s.type==="intro" ? "Começar" : (steps[step+1] && steps[step+1].type==="result" ? "Ver meu diagnóstico" : "Continuar");
+
+  if(s.type==="intro"){
+    stage.innerHTML=`<div class="center">
+      <div class="intro-icon">🕊️</div>
+      <h2 class="q">Antes de vender, você precisa se posicionar.</h2>
+      <p class="hint" style="margin-top:10px">Responda algumas perguntas rápidas e receba um plano personalizado: como estruturar sua <b>bio</b>, o que colocar nos <b>destaques</b>, <b>o que postar</b> e as <b>cores</b> que passam a sua mensagem.</p>
+      <p class="hint" style="font-style:italic;color:var(--rose)">Leva menos de 4 minutos. Nada é enviado — tudo fica no seu aparelho.</p>
+    </div>`;
+  }
+  else if(s.type==="text"){
+    let html=`<div class="step-label">${s.label}</div><h2 class="q">${s.q}</h2><p class="hint">${s.hint}</p>`;
+    s.fields.forEach(f=>{
+      const val=data[f.k]||"";
+      const big=f.k==="transformacao"||f.k==="oquefaz";
+      html+=`<label class="f">${f.l}</label>`;
+      html+= big
+        ? `<textarea data-k="${f.k}" placeholder="${f.ph}">${val}</textarea>`
+        : `<input type="text" data-k="${f.k}" placeholder="${f.ph}" value="${val.replace(/"/g,'&quot;')}">`;
+    });
+    stage.innerHTML=html;
+    stage.querySelectorAll('[data-k]').forEach(el=>{
+      el.addEventListener('input',e=>{data[e.target.dataset.k]=e.target.value; validate();});
+    });
+  }
+  else if(s.type==="single"||s.type==="multi"){
+    const grid = s.options.length>4 ? "grid":"";
+    const cls = s.type==="multi" ? "opts check "+grid : "opts "+grid;
+    let html=`<div class="step-label">${s.label}</div><h2 class="q">${s.q}</h2><p class="hint">${s.hint}</p><div class="${cls}">`;
+    s.options.forEach(o=>{
+      const sel = s.type==="multi" ? data[s.key].includes(o.v) : data[s.key]===o.v;
+      html+=`<div class="opt ${sel?'sel':''}" data-v="${o.v}"><span class="dot"></span><div><b>${o.b}</b><small>${o.s}</small></div></div>`;
+    });
+    html+=`</div>`;
+    stage.innerHTML=html;
+    stage.querySelectorAll('.opt').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const v=el.dataset.v;
+        if(s.type==="single"){data[s.key]=v;}
+        else{
+          const i=data[s.key].indexOf(v);
+          if(i>=0)data[s.key].splice(i,1); else data[s.key].push(v);
+        }
+        render();
+      });
+    });
+  }
+  else if(s.type==="upload"){
+    const img=data.print?`<img src="${data.print}" alt="print">`:"";
+    stage.innerHTML=`<div class="step-label">${s.label}</div><h2 class="q">${s.q}</h2><p class="hint">${s.hint}</p>
+      <div class="drop" id="drop"><b>📷 Toque para anexar o print</b>Ou arraste a imagem aqui ${img}</div>
+      <input type="file" id="file" accept="image/*" class="hide">`;
+    const drop=document.getElementById('drop'),file=document.getElementById('file');
+    drop.addEventListener('click',()=>file.click());
+    file.addEventListener('change',e=>{
+      const f=e.target.files[0]; if(!f)return;
+      const r=new FileReader(); r.onload=ev=>{data.print=ev.target.result; render();}; r.readAsDataURL(f);
+    });
+  }
+  else if(s.type==="result"){
+    runDiagnosis();
+    return;
+  }
+  validate();
+}
+
+/* ---------- IA (via backend seguro /api/diagnostico) ---------- */
+const AI_ENDPOINT = "/api/diagnostico"; // a chave fica escondida no servidor da Vercel
+
+// reduz a imagem antes de enviar (mais rápido e barato, e evita payload grande)
+function compressImage(dataUrl, maxSide, quality){
+  return new Promise(resolve=>{
+    if(!dataUrl){resolve(null);return;}
+    const img=new Image();
+    img.onload=()=>{
+      let{width:w,height:h}=img;
+      const scale=Math.min(1, maxSide/Math.max(w,h));
+      w=Math.round(w*scale); h=Math.round(h*scale);
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      try{ resolve(c.toDataURL('image/jpeg', quality)); }catch(e){ resolve(dataUrl); }
+    };
+    img.onerror=()=>resolve(dataUrl);
+    img.src=dataUrl;
+  });
+}
+
+function renderLoading(){
+  document.getElementById('nav').classList.add('hide');
+  stage.innerHTML=`<div class="center" style="padding:40px 0">
+    <div class="spinner"></div>
+    <h2 class="q" style="margin-top:18px">Analisando o seu perfil...</h2>
+    <p class="hint">A IA está lendo suas respostas${data.print?' e o seu print':''} pra montar um diagnóstico sob medida. Só um instante 🤍</p>
+  </div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function runDiagnosis(){
+  renderLoading();
+  try{
+    const img = data.print ? await compressImage(data.print, 1100, 0.8) : null;
+    const payload = { answers:{
+      nome:data.nome, oquefaz:data.oquefaz, paraquem:data.paraquem, transformacao:data.transformacao,
+      sentimento:data.sentimento, tom:data.tom, erros:data.erros, objetivo:data.objetivo
+    }, image: img };
+    const resp = await fetch(AI_ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+    if(!resp.ok){ throw new Error('backend '+resp.status); }
+    const obj = await resp.json();
+    if(!obj || !obj.frase){ throw new Error('resposta incompleta'); }
+    renderAIResult(obj);
+  }catch(err){
+    // Sem backend/chave ou falha de rede: cai no diagnóstico por regras (o site nunca "quebra")
+    renderResult(true);
+  }
+}
+
+function esc(t){ return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderAIResult(o){
+  const nm=firstName();
+  const cores=(o.paleta&&o.paleta.cores)||[["#B76E79",""],["#C9A87C",""],["#F3E4D7",""],["#6E4B45",""]];
+  let n=0; const N=()=>++n;
+  let html=`
+  <div class="r-head">
+    <div class="tag">SEU DIAGNÓSTICO ELO · POR IA</div>
+    <h2>Pronto, <span class="r-name">${esc(nm)}</span>! Aqui está o seu plano de posicionamento</h2>
+  </div>`;
+
+  if(o.analise_print){
+    html+=`<div class="block"><h3><span class="n">★</span> Análise do seu perfil</h3>
+      <div class="warn" style="background:#FBEDEE;border-left-color:var(--rose)">${esc(o.analise_print)}</div></div>`;
+  }
+  html+=`<div class="block"><h3><span class="n">${N()}</span> Seu posicionamento em uma frase</h3>
+    <div class="frase">${esc(o.frase)}</div></div>`;
+
+  if(o.bio){
+    html+=`<div class="block"><h3><span class="n">${N()}</span> Sua bio estruturada</h3>
+      <div class="bio-box" id="biobox">${esc(o.bio)}</div>
+      <span class="copy" onclick="copyBio()">📋 Copiar bio</span></div>`;
+  }
+  if(o.destaques&&o.destaques.length){
+    html+=`<div class="block"><h3><span class="n">${N()}</span> Seus destaques (na ordem)</h3>
+      <div class="destaques">${o.destaques.map((d,i)=>`<span class="destaque">${i+1}. ${esc(d)}</span>`).join('')}</div></div>`;
+  }
+  if(o.pilares&&o.pilares.length){
+    html+=`<div class="block"><h3><span class="n">${N()}</span> O que postar — seus pilares</h3>
+      <div class="list">${o.pilares.map((p,i)=>`<div class="pilar"><span class="pc" style="background:${(cores[i%cores.length]||[])[0]||'#B76E79'}"></span><div><b>${esc(p.titulo)}</b><small>${esc(p.desc)}</small></div></div>`).join('')}</div></div>`;
+  }
+  if(o.paleta){
+    html+=`<div class="block"><h3><span class="n">${N()}</span> Suas cores — ${esc(o.paleta.titulo||'')}</h3>
+      <div class="palette">${cores.map(c=>`<div class="sw"><div class="chip" style="background:${esc(c[0])}"></div>${esc(c[1]||'')}<br><code>${esc(c[0])}</code></div>`).join('')}</div>
+      <p class="hint" style="margin-top:12px">${esc(o.paleta.msg||'')}</p></div>`;
+  }
+  if(o.correcoes&&o.correcoes.length){
+    html+=`<div class="block"><h3><span class="n">${N()}</span> Correções prioritárias pra você</h3>
+      <ul class="list">${o.correcoes.map(f=>`<li><b>${esc(f.titulo)}</b><br><small style="color:var(--brown-soft)">${esc(f.desc)}</small></li>`).join('')}</ul>
+      <div class="warn"><b>Lembre-se:</b> esses erros não são sentenças, são pontos de correção — é falta de clareza sobre a mensagem, não de capacidade.</div></div>`;
+  }
+  if(o.passos&&o.passos.length){
+    html+=`<div class="block"><h3><span class="n">${N()}</span> Seus próximos passos</h3>
+      <ul class="list">${o.passos.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`;
+  }
+  if(data.print){
+    html+=`<div class="block"><h3><span class="n">★</span> Seu perfil de hoje</h3>
+      <p class="hint">Guarde esse "antes" pra comparar sua evolução:</p>
+      <div class="center"><img src="${data.print}" style="max-width:200px;border-radius:12px;box-shadow:var(--shadow)"></div></div>`;
+  }
+  html+=`<div class="center" style="margin-top:20px">
+    <button class="btn prim" style="max-width:280px;margin:0 auto" onclick="window.print()">🖨️ Salvar / imprimir meu plano</button>
+    <br><span class="copy" onclick="restart()" style="margin-top:14px">↺ Refazer o diagnóstico</span></div>`;
+
+  stage.innerHTML=html;
+  document.getElementById('nav').classList.add('hide');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function validate(){
+  const s=steps[step];
+  let ok=true;
+  if(s.type==="text") ok = s.fields.every(f=>(data[f.k]||"").trim().length>0);
+  if(s.type==="single") ok = !!data[s.key];
+  // multi e upload são opcionais
+  btnNext.disabled=!ok;
+}
+
+/* ---------- MOTOR DE DIAGNÓSTICO ---------- */
+function firstName(){ return (data.nome||"").trim().split(/\s+/)[0] || "você"; }
+function cap(t){ t=(t||"").trim(); return t.charAt(0).toUpperCase()+t.slice(1); }
+function low(t){ return (t||"").trim().replace(/\.$/,'').toLowerCase(); }
+
+function bioEmoji(){
+  return {acolhedora:"🤍",sofisticada:"✦",confiavel:"›",energetica:"⚡",delicada:"🌷",criativa:"✺"}[data.sentimento]||"•";
+}
+function ctaText(){
+  return {
+    autoridade:"👇 Conteúdo pra você virar referência no que faz",
+    vendas:"👇 Agende / peça o seu aqui",
+    audiencia:"👇 Me segue e compartilha com quem precisa",
+    conexao:"👇 Vem conversar comigo nos stories"
+  }[data.objetivo]||"👇 Comece por aqui";
+}
+
+function buildBio(){
+  const e=bioEmoji();
+  const l1 = cap(low(data.oquefaz)) + (data.paraquem?` para ${low(data.paraquem)}`:"");
+  const l2 = data.transformacao ? `${e} ${cap(low(data.transformacao))}` : `${e} Ajudo você a chegar mais longe`;
+  const l3 = ctaText();
+  return `${l1}\n${l2}\n${l3}\n🔗 seu-link-aqui`;
+}
+
+function buildDestaques(){
+  const base=["✨ Comece aqui","💗 Sobre mim"];
+  if(data.objetivo==="vendas"){base.push("🛍️ Serviços","⭐ Resultados","💬 Como comprar");}
+  else if(data.objetivo==="autoridade"){base.push("📚 Conteúdos","⭐ Depoimentos","❓ Dúvidas");}
+  else if(data.objetivo==="audiencia"){base.push("🎯 Meus temas","⭐ Provas","📌 Salvar");}
+  else {base.push("👀 Bastidores","💬 Perguntas","⭐ Depoimentos");}
+  return base;
+}
+
+function buildPilares(){
+  const pal=PALETAS[data.sentimento].cores;
+  const nicho=low(data.oquefaz)||"seu tema";
+  const P=[
+    {c:pal[0][0],b:"Conexão (quem você é)",s:`Bastidores, sua história, valores. Mostre a pessoa por trás de "${nicho}". É o que gera confiança antes da venda.`},
+    {c:pal[3][0],b:"Autoridade (o que você sabe)",s:`Dicas e ensinamentos que só quem entende de ${nicho} tem. Mostre a SUA visão — não o genérico que todo mundo repete.`},
+    {c:pal[1][0],b:"Prova (por que confiar)",s:`Depoimentos, antes/depois, resultados de clientes. Deixa claro que a sua entrega funciona.`},
+    {c:pal[2][0],b:"Oferta (como comprar)",s:`Apresente seu produto/serviço com clareza e um convite pra ação. Sem medo de vender — de forma natural.`}
+  ];
+  return P;
+}
+
+function errorFixes(){
+  const map={
+    identidade:{t:"Padronize sua identidade visual",d:"Escolha 3-4 cores fixas e 1 fonte. Use sempre as mesmas em fotos, capas e stories."},
+    bio:{t:"Reescreva sua bio com clareza",d:"Use a sugestão de bio abaixo: o que você faz, pra quem, a transformação e um convite."},
+    vitrine:{t:"Equilibre com conteúdo de conexão",d:"Pra cada post de produto, publique um de bastidor ou história. Perfil vitrine não gera vínculo."},
+    tudo:{t:"Escolha 3 a 4 temas centrais",d:"Defina os pilares abaixo e evite fugir deles. Foco faz as pessoas te associarem a algo."},
+    generico:{t:"Traga a SUA visão",d:"Em vez de repetir o óbvio, conte como VOCÊ pensa, faz ou resolve. Opinião posiciona."},
+    sumir:{t:"Crie constância possível",d:"Melhor 3x por semana sempre, do que todo dia por uma semana e sumir. Defina uma rotina realista."},
+    semcta:{t:"Sempre conduza pra um próximo passo",d:"Termine os posts com um convite: salvar, comentar, chamar no direct, agendar."}
+  };
+  return data.erros.map(e=>map[e]).filter(Boolean);
+}
+
+function renderResult(fallback){
+  const pal=PALETAS[data.sentimento]||PALETAS.acolhedora;
+  const nm=firstName();
+  const bio=buildBio();
+  const destaques=buildDestaques();
+  const pilares=buildPilares();
+  const fixes=errorFixes();
+
+  let html=`
+  <div class="r-head">
+    <div class="tag">SEU DIAGNÓSTICO ELO</div>
+    <h2>Pronto, <span class="r-name">${nm}</span>! Aqui está o seu plano de posicionamento</h2>
+  </div>
+  ${fallback?`<div class="warn" style="margin-bottom:6px"><b>Modo offline:</b> a análise por IA não respondeu agora, então geramos o seu plano pelo método ELO. Está completo — se quiser a versão com IA lendo o print, tente novamente em instantes.</div>`:''}
+
+  <div class="block">
+    <h3><span class="n">1</span> Seu posicionamento em uma frase</h3>
+    <div class="frase">${buildFrase()}</div>
+    <p class="hint" style="margin-top:10px">Essa é a mensagem central que todo o seu perfil deve reforçar — em fotos, legendas e stories.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="n">2</span> Sua bio estruturada</h3>
+    <div class="bio-box" id="biobox">${bio}</div>
+    <span class="copy" onclick="copyBio()">📋 Copiar bio</span>
+    <p class="hint" style="margin-top:6px">Troque "seu-link-aqui" pelo seu link (WhatsApp, site ou Linktree). Cada linha tem uma função: quem você é, a transformação e o convite.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="n">3</span> Seus destaques (na ordem)</h3>
+    <div class="destaques">${destaques.map((d,i)=>`<span class="destaque">${i+1}. ${d}</span>`).join('')}</div>
+    <p class="hint" style="margin-top:12px">Deixe o primeiro destaque como uma "porta de entrada" que explica quem você é. Use capas na mesma paleta de cores abaixo.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="n">4</span> O que postar — seus 4 pilares</h3>
+    <div class="list">
+      ${pilares.map(p=>`<div class="pilar"><span class="pc" style="background:${p.c}"></span><div><b>${p.b}</b><small>${p.s}</small></div></div>`).join('')}
+    </div>
+    <p class="hint" style="margin-top:12px">Gire entre esses 4 pilares. Assim você deixa de ser "perfil vitrine" e passa a construir autoridade + conexão + venda.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="n">5</span> Suas cores — ${pal.titulo}</h3>
+    <div class="palette">
+      ${pal.cores.map(c=>`<div class="sw"><div class="chip" style="background:${c[0]}"></div>${c[1]}<br><code>${c[0]}</code></div>`).join('')}
+    </div>
+    <p class="hint" style="margin-top:12px">${pal.msg} Use a cor mais forte em detalhes e chamadas, e as claras como fundo. Mantenha sempre as mesmas.</p>
+  </div>`;
+
+  if(fixes.length){
+    html+=`<div class="block">
+      <h3><span class="n">6</span> Correções prioritárias pra você</h3>
+      <ul class="list acao">
+        ${fixes.map(f=>`<li><b>${f.t}</b><br><small style="color:var(--brown-soft)">${f.d}</small></li>`).join('')}
+      </ul>
+      <div class="warn"><b>Lembre-se:</b> esses erros não são sentenças, são pontos de correção. Muitas vezes o problema não é falta de capacidade — é falta de clareza sobre a mensagem que você comunica.</div>
+    </div>`;
+  }
+
+  html+=`<div class="block">
+    <h3><span class="n">${fixes.length?7:6}</span> Seus próximos 3 passos</h3>
+    <ul class="list">
+      <li><b>Hoje:</b> atualize sua bio com o texto acima e defina suas cores fixas.</li>
+      <li><b>Esta semana:</b> organize seus destaques e crie capas na sua paleta.</li>
+      <li><b>Continuar:</b> poste girando entre os 4 pilares, sempre com um convite no final.</li>
+    </ul>
+  </div>`;
+
+  if(data.print){
+    html+=`<div class="block"><h3><span class="n">★</span> Seu perfil de hoje</h3>
+      <p class="hint">Guarde esse "antes" pra comparar sua evolução:</p>
+      <div class="center"><img src="${data.print}" style="max-width:200px;border-radius:12px;box-shadow:var(--shadow)"></div></div>`;
+  }
+
+  html+=`<div class="center" style="margin-top:20px">
+    <button class="btn prim" style="max-width:280px;margin:0 auto" onclick="window.print()">🖨️ Salvar / imprimir meu plano</button>
+    <br><span class="copy" onclick="restart()" style="margin-top:14px">↺ Refazer o diagnóstico</span>
+  </div>`;
+
+  stage.innerHTML=html;
+  document.getElementById('nav').classList.add('hide');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildFrase(){
+  const oq=low(data.oquefaz)||"o que faço";
+  const pq=data.paraquem?low(data.paraquem):"minhas clientes";
+  const tr=data.transformacao?cap(low(data.transformacao)):"Alcançam mais do que imaginavam";
+  return `Eu ajudo ${pq} através de ${oq}. O resultado: ${low(tr)}.`;
+}
+
+window.copyBio=function(){
+  const t=document.getElementById('biobox').innerText;
+  navigator.clipboard&&navigator.clipboard.writeText(t);
+  event.target.textContent="✓ Copiado!";
+  setTimeout(()=>event.target.textContent="📋 Copiar bio",1600);
+};
+window.restart=function(){ step=0; data.erros=[]; document.getElementById('nav').classList.remove('hide'); render(); };
+
+/* ---------- NAVEGAÇÃO ---------- */
+btnNext.addEventListener('click',()=>{ if(btnNext.disabled)return; step++; render(); });
+btnBack.addEventListener('click',()=>{ if(step>0){step--; document.getElementById('nav').classList.remove('hide'); render();} });
+
+render();
+</script>
+</body>
+</html>
